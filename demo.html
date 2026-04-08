@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Demo | SortingSource</title>
+    <style>
+        :root { 
+            --bg: #050505; 
+            --text: #888; 
+            --accent: #2563eb; 
+            --accent-glow: rgba(37, 99, 235, 0.2);
+            --danger: #ef4444;
+            --mono: 'Fira Code', 'Courier New', monospace; 
+            --sans: 'Inter', -apple-system, sans-serif;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--sans); 
+            padding: 4rem 2rem; 
+            max-width: 1000px; 
+            margin: 0 auto; 
+            line-height: 1.8; 
+            background-image: radial-gradient(circle, #111 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        h1, h2, h3 { color: #fff; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--mono); }
+        h1 { border-bottom: 1px dashed #333; padding-bottom: 1rem; margin-bottom: 1rem; }
+        .subtitle { font-family: var(--mono); font-size: 0.85rem; color: #666; margin-bottom: 4rem; display: block; }
+        
+        .back-btn { display: inline-block; margin-bottom: 2rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; font-family: var(--mono); }
+        .back-btn:hover { color: #fff; text-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
+
+        /* --- TACTICAL HUD MEDIA CONTAINERS --- */
+        .hud-module {
+            margin-bottom: 5rem;
+            position: relative;
+        }
+        .hud-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #111;
+            border: 1px solid #333;
+            border-bottom: none;
+            padding: 0.75rem 1.5rem;
+            font-family: var(--mono);
+            font-size: 0.75rem;
+            color: #aaa;
+            border-radius: 8px 8px 0 0;
+        }
+        .hud-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--danger);
+        }
+        .rec-dot {
+            width: 8px; height: 8px;
+            background: var(--danger);
+            border-radius: 50%;
+            animation: pulseRec 1.5s infinite;
+        }
+        .hud-body {
+            background: #000;
+            border: 1px solid #333;
+            border-radius: 0 0 8px 8px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.6), inset 0 0 20px rgba(255,255,255,0.02);
+        }
+        
+        /* Media Elements */
+        video, img {
+            width: 100%;
+            height: auto;
+            display: block;
+            aspect-ratio: 16/9;
+            object-fit: cover;
+            background: #0a0a0a; /* Placeholder bg if media is missing */
+        }
+        
+        .module-desc {
+            margin-top: 1.5rem;
+            font-size: 0.95rem;
+            color: #888;
+            border-left: 2px solid var(--accent);
+            padding-left: 1rem;
+        }
+
+        @keyframes pulseRec {
+            0% { opacity: 1; box-shadow: 0 0 8px var(--danger); }
+            50% { opacity: 0.3; box-shadow: none; }
+            100% { opacity: 1; box-shadow: 0 0 8px var(--danger); }
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">&lt;_ RETURN TO MAIN SYSTEM</a>
+    
+    <h1>Visual Intel // Live Feed</h1>
+    <span class="subtitle">STATUS: ALL SURVEILLANCE FEEDS OPERATIONAL</span>
+
+    <div class="hud-module">
+        <div class="hud-header">
+            <div class="hud-status"><div class="rec-dot"></div> FEED_01 // ACQUISITION</div>
+            <div>[ HUNTER + EXTRACTOR PROTOCOL ]</div>
+        </div>
+        <div class="hud-body">
+            <video src="vid1.mp4" autoplay muted loop playsinline>
+                System Error: Video stream unreadable.
+            </video>
+        </div>
+        <p class="module-desc"><strong>Phase 1:</strong> Watch the engine scrape Google Places, bypass security limits, and execute deep technical audits (SSL/Pixel detection) on targeted leads in real-time.</p>
+    </div>
+
+    <div class="hud-module">
+        <div class="hud-header">
+            <div class="hud-status"><div class="rec-dot"></div> FEED_02 // SYNTHESIS & LAUNCH</div>
+            <div>[ PHASE 2 & 3 PROTOCOLS ]</div>
+        </div>
+        <div class="hud-body">
+            <video src="vid 2.mp4" autoplay muted loop playsinline>
+                System Error: Video stream unreadable.
+            </video>
+        </div>
+        <p class="module-desc"><strong>Phase 2 & 3:</strong> The engine shifts into <em>Phase 2 (Customization)</em>, injecting your target's data into the AI to construct hyper-personalized pitches. It then instantly transitions into <em>Phase 3 (Mass Ability)</em>, executing high-volume bulk dispatch while injecting anti-spam jitter to protect your reputation.</p>
+    </div>
+
+    <div class="hud-module">
+        <div class="hud-header">
+            <div style="color: var(--accent);">> STATIC CAPTURE // TARGET TRACKING</div>
+            <div>[ PHASE 4: LOCAL CRM ]</div>
+        </div>
+        <div class="hud-body" style="border-color: var(--accent);">
+            <img src="pic1.png" alt="Final Dispatch Results">
+        </div>
+        <p class="module-desc"><strong>Phase 4:</strong> The Follow-Up Protocol. Your entire outbound history is logged locally. View a complete audit trail of the entities you have reached out to, allowing you to monitor active engagements and execute precise follow-ups without leaving the software.</p>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SortingSource | Weapons-Grade Lead Gen</title>
+    <style>
+        /* --- THE AESTHETIC VARIABLES --- */
+        :root {
+            --bg-color: #0a0a0a;
+            --surface-color: #161616;
+            --accent-blue: #2563eb;
+            --accent-purple: #8b5cf6;
+            --accent-glow: rgba(37, 99, 235, 0.4);
+            --inner-glow: rgba(37, 99, 235, 0.2); /* For the subtle inner glow */
+            --text-main: #ffffff;
+            --text-muted: #888888;
+            --terminal-green: #10b981;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            --font-mono: 'Fira Code', 'Courier New', monospace;
+        }
+
+        /* --- GLOBAL RESET & TYPOGRAPHY --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background-color: var(--bg-color);
+            background-image: radial-gradient(circle, #222 1px, transparent 1px);
+            background-size: 24px 24px;
+            color: var(--text-main);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        h1, h2, h3 { font-weight: 800; letter-spacing: -0.02em; }
+        a { text-decoration: none; }
+
+        /* --- HERO SECTION --- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+        }
+        .status-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-blue);
+            border: 1px solid var(--accent-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            margin-bottom: 2rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            background: rgba(37, 99, 235, 0.05);
+        }
+        .hero h1 {
+            font-size: 4.5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .hero h1 span { color: #3b82f6; }
+        .hero p {
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 3rem;
+            font-size: 1.1rem;
+        }
+        .btn-group { display: flex; gap: 1rem; }
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px var(--accent-glow);
+            background: #3b82f6;
+        }
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            border: 1px solid #333;
+        }
+        .btn-secondary:hover { background: #222; }
+
+        /* --- THE ENGINE SECTION --- */
+        .engine {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .section-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+        .section-header h2 {
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            font-style: italic;
+        }
+        .section-header p {
+            font-family: var(--font-mono);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+        
+        /* Alternating Layout Framework */
+        .split-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 8rem;
+        }
+        @media (min-width: 769px) {
+            .split-layout.reverse .step-content { grid-column: 2; grid-row: 1; }
+            .split-layout.reverse .visual-container { grid-column: 1; grid-row: 1; }
+        }
+        .split-layout:last-child { margin-bottom: 0; }
+
+        .step-content h3 {
+            font-size: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .step-content .tag {
+            color: var(--accent-blue);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            display: block;
+            margin: 0.5rem 0 1.5rem 0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        /* --- VISUALIZERS (The Displays) --- */
+        .visual-container {
+            background: #000;
+            border: 1px solid #222;
+            border-radius: 12px;
+            overflow: hidden;
+            /* Outer shadow + Subtler Inner Glow from prompt */
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5),
+                        inset 0 0 15px var(--inner-glow); 
+            position: relative;
+            min-height: 280px;
+        }
+        .terminal-header {
+            background: #111;
+            padding: 0.75rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 1px solid #222;
+            position: absolute;
+            top: 0; width: 100%;
+            z-index: 10;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; }
+        .dot.r { background: #ef4444; }
+        .dot.y { background: #f59e0b; }
+        .dot.g { background: #10b981; }
+        .terminal-title {
+            margin-left:1rem; 
+            font-family:var(--font-mono); 
+            font-size:0.7rem; 
+            color:#666;
+            text-transform: uppercase;
+        }
+        .display-body {
+            padding: 4rem 2rem 2rem 2rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            height: 100%;
+            /* Apply text flash animation to all terminal bodies */
+            animation: textFlash 4s infinite linear;
+        }
+
+        /* Display Variants */
+        .display-hunter { color: var(--terminal-green); }
+        
+        .display-extractor {
+            color: var(--text-muted);
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px dashed #333;
+            padding-bottom: 0.2rem;
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        .data-row:nth-child(1) { animation-delay: 0.2s; }
+        .data-row:nth-child(2) { animation-delay: 0.6s; }
+        .data-row:nth-child(3) { animation-delay: 1.0s; }
+        .data-row:nth-child(4) { animation-delay: 1.4s; }
+        .data-highlight { color: #3b82f6; }
+
+        .display-pitcher {
+            background: radial-gradient(circle at center, rgba(139, 92, 246, 0.1) 0%, transparent 70%);
+            color: #d8b4fe;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        .ai-pulse {
+            border-left: 2px solid var(--accent-purple);
+            padding-left: 1rem;
+            animation: pulseGlow 2s infinite;
+        }
+
+        .display-dispatcher {
+            color: #ef4444;
+        }
+        .log-entry { margin-bottom: 0.5rem; font-size: 0.8rem; }
+        .log-success { color: var(--terminal-green); }
+
+        /* Animations */
+        @keyframes fadeIn { to { opacity: 1; } }
+        @keyframes pulseGlow {
+            0% { border-color: rgba(139, 92, 246, 0.2); }
+            50% { border-color: rgba(139, 92, 246, 1); }
+            100% { border-color: rgba(139, 92, 246, 0.2); }
+        }
+        /* Subtle text flash from prompt - very slight opacity variations */
+        @keyframes textFlash {
+            0%, 100% { opacity: 1; }
+            25% { opacity: 0.98; }
+            50% { opacity: 1; }
+            75% { opacity: 0.99; }
+        }
+
+        /* --- THE ARSENAL SECTION --- */
+        .arsenal {
+            padding: 8rem 2rem;
+            background: linear-gradient(to bottom, transparent, rgba(37,99,235,0.05));
+        }
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .card {
+            background: var(--surface-color);
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 2.5rem;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            transition: all 0.3s ease;
+            /* Inner Glow from prompt */
+            box-shadow: inset 0 0 15px var(--inner-glow);
+        }
+        .card:hover { 
+            transform: translateY(-5px);
+            /* Increase glow on hover for engagement */
+            box-shadow: inset 0 0 25px var(--inner-glow),
+                        0 10px 30px rgba(0,0,0,0.5);
+        }
+        .card.popular {
+            border-color: var(--accent-blue);
+            /* Add outer glow + Inner Glow */
+            box-shadow: inset 0 0 15px var(--inner-glow),
+                        0 0 30px var(--accent-glow);
+        }
+        .popular-tag {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--accent-blue);
+            color: white;
+            font-size: 0.7rem;
+            font-weight: bold;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            text-transform: uppercase;
+        }
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+            display: flex;
+            align-items: baseline;
+        }
+        .price span { font-size: 1rem; color: var(--text-muted); font-weight: normal; margin-left: 0.5rem;}
+        ul.features {
+            list-style: none;
+            margin: 2rem 0;
+            flex-grow: 1;
+        }
+        ul.features li {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        ul.features li::before {
+            content: '✓';
+            color: var(--accent-blue);
+        }
+        .card .btn { width: 100%; margin-top: auto; }
+
+        /* --- CONTACT BOTTOM --- */
+        .custom-deployment {
+            max-width: 800px;
+            margin: 5rem auto 2rem;
+            text-align: center;
+            background: rgba(10, 10, 10, 0.8);
+            border: 1px solid #222;
+            padding: 3rem;
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            /* Inner Glow from prompt */
+            box-shadow: inset 0 0 15px var(--inner-glow);
+        }
+        .custom-deployment h4 { margin-bottom: 1rem; font-size: 1.5rem; }
+        .custom-deployment p { color: var(--text-muted); margin-bottom: 2rem; }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 3rem; }
+            .split-layout { grid-template-columns: 1fr; gap: 2rem; }
+            .split-layout.reverse .step-content, .split-layout.reverse .visual-container { grid-column: auto; grid-row: auto; }
+        }
+        /* --- SYSTEM FOOTER --- */
+        .system-footer {
+            border-top: 1px dashed #222;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            background: #050505;
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .company-name {
+            color: #ccc;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .rights {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            color: #555;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-links a {
+            color: var(--text-muted);
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: var(--accent-blue);
+            text-shadow: 0 0 8px var(--accent-glow);
+        }
+
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="hero">
+        <div class="status-badge">&gt;_ SYSTEM ONLINE // V 2.1.0 // NO SUBSCRIPTIONS</div>
+        <h1>Weapons-Grade Lead<br>Generation.<br><span>Zero Monthly Fees.</span></h1>
+        <p>SortingSource is the ultimate "Anti-SaaS" outbound engine. Pay once, own the engine forever, and generate an unlimited pipeline of leads stored locally on your machine.</p>
+        <div class="btn-group">
+            <a href="#arsenal" class="btn btn-primary">Acquire Your License</a>
+            <a href="#engine" class="btn btn-secondary">View The Arsenal</a>
+        </div>
+    </header>
+
+    <section id="engine" class="engine">
+        <div class="section-header">
+            <h2>The 4-Step Engine</h2>
+            <p>Automated end-to-end execution.</p>
+        </div>
+
+        <div class="split-layout">
+            <div class="step-content">
+                <h3>1. The Hunter</h3>
+                <span class="tag">Target Acquisition</span>
+                <p style="color: var(--text-muted);">Input your niche and city parameters. Our proprietary Google Maps API integration strips the web of dozens of relevant local businesses in seconds.</p>
+            </div>
+            <div class="visual-container">
+                <div class="terminal-header">
+                    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+                    <span class="terminal-title">ACTIVE_PROTOCOL_MONITOR</span>
+                </div>
+                <div class="display-body display-hunter" id="type-hunter"></div>
+                    </div>
+            </div>
+        </div>
+
+        <div class="split-layout reverse">
+            <div class="step-content">
+                <h3>2. The Extractor</h3>
+                <span class="tag">Deep Data Mining</span>
+                <p style="color: var(--text-muted);">The Extractor runs asynchronous protocols on your targets' websites to pull direct emails and social handles (IG, FB, X, TikTok) that are usually hidden from public view.</p>
+            </div>
+            <div class="visual-container">
+                <div class="terminal-header">
+                    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+                    <span class="terminal-title">DATA_SCRAPE_THREADS</span>
+                </div>
+                <div class="display-body display-extractor" id="type-extractor"></div>
+            </div>
+        </div>
+
+        <div class="split-layout">
+            <div class="step-content">
+                <h3>3. The Pitcher</h3>
+                <span class="tag" style="color: var(--accent-purple);">Gemini AI Synthesis</span>
+                <p style="color: var(--text-muted);">Stop sending generic garbage. Route your target data through Gemini, OpenAI, or open-source Hugging Face models. Our future-proof 'Model Override' lets you plug in the newest LLMs the second they drop. The AI automatically synthesizes hyper-personalized pitches based on the Tech Audit data.</p>
+            </div>
+            <div class="visual-container display-pitcher">
+                <div class="terminal-header">
+                    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+                    <span class="terminal-title">LLM_SYNTHESIS_ENGINE</span>
+                </div>
+                <div class="display-body display-pitcher" id="type-pitcher"></div>
+                    <div class="display-body display-pitcher" id="type-pitcher"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="split-layout reverse">
+            <div class="step-content">
+                <h3>4. The Dispatcher</h3>
+                <span class="tag" style="color: #ef4444;">Stealth-Mode Inbox Delivery</span>
+                <p style="color: var(--text-muted);">Connect your SMTP/IMAP for email, or toggle the Twilio Gateway for SMS drops. Our 'Anti-Spam Jitter' protocol injects randomized human-like delays (30-90s) between messages to protect your domain and number reputation, syncing all replies directly to your local UI.</p>
+            </div>
+            <div class="visual-container">
+                <div class="terminal-header">
+                    <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+                    <span class="terminal-title">SMTP_RELAY_ROUTER</span>
+                </div>
+                <div class="display-body display-dispatcher" id="type-dispatcher"></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="arsenal" class="arsenal">
+        <div class="section-header">
+            <h2>The Arsenal</h2>
+            <p>DEPLOY THE RIGHT AMOUNT OF FIREPOWER FOR YOUR OPERATION.</p>
+        </div>
+
+        <div style="text-align: center; margin-bottom: 5rem;">
+            <a href="demo.html" class="btn btn-primary" style="font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 1.5rem 3rem; font-size: 1.1rem;">
+                <span style="color: #ef4444; margin-right: 10px; text-shadow: 0 0 10px #ef4444;">⏺ REC</span> Watch The System Demo
+            </a>
+        </div>
+        
+        <div class="pricing-grid">
+            <div class="card">
+                <h3>1-Key License</h3>
+                <p style="color: var(--text-muted); font-size:0.9rem;">For the Solo Mercenary</p>
+                <div class="price">$2,000<span>/ one-time</span></div>
+                <ul class="features">
+                    <li>1 Device License</li>
+                    <li>Unlimited Local Lead Gen</li>
+                    <li>Full Suite (Hunter to Dispatcher)</li>
+                    <li>Local Database Encryption</li>
+                    <li>Standard Support</li>
+                </ul>
+                <a href="https://buy.stripe.com/8x23cw85F87Ocusb5Jf3a09" target="_blank" class="btn btn-secondary">&gt;_ Deploy 1 Key</a>
+            </div>
+
+            <div class="card popular">
+                <div class="popular-tag">Most Popular</div>
+                <h3>5-Key License</h3>
+                <p style="color: var(--text-muted); font-size:0.9rem;">For the Agency Taskforce</p>
+                <div class="price">$8,750<span>/ one-time</span></div>
+                <ul class="features">
+                    <li>5 Device Licenses</li>
+                    <li>Unlimited Local Lead Gen</li>
+                    <li>Full Suite Access</li>
+                    <li>Local Database Encryption</li>
+                    <li>Priority Support</li>
+                </ul>
+                <a href="https://buy.stripe.com/bJebJ271Bds87a82zdf3a08" target="_blank" class="btn btn-primary">&gt;_ Deploy 5 Keys</a>
+            </div>
+
+            <div class="card">
+                <h3>10-Key License</h3>
+                <p style="color: var(--text-muted); font-size:0.9rem;">For the Enterprise Command</p>
+                <div class="price">$15,000<span>/ one-time</span></div>
+                <ul class="features">
+                    <li>10 Device Licenses</li>
+                    <li>Unlimited Local Lead Gen</li>
+                    <li>Full Suite Access</li>
+                    <li>Local Database Encryption</li>
+                    <li>Dedicated Onboarding</li>
+                </ul>
+                <a href="https://buy.stripe.com/dRm14obhR3Rybqo7Txf3a07" target="_blank" class="btn btn-secondary">&gt;_ Deploy 10 Keys</a>
+            </div>
+        </div>
+
+        <div class="custom-deployment">
+            <h4>🛡️ CUSTOM DEPLOYMENT REQUIRED?</h4>
+            <p>If your operation requires more than 10 keys, or if you need a custom enterprise configuration for large-scale teams, contact the lead architect directly for a tailored quote.</p>
+            <a href="mailto:ER6798@GMAIL.COM" class="btn btn-primary">✉ EMAIL: ER6798@GMAIL.COM</a>
+        </div>
+    </section>
+
+    <footer class="system-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="company-name">© 2026 Sorting Source LLC.</span>
+                <span class="rights">ALL SYSTEMS OPERATIONAL // ALL RIGHTS RESERVED.</span>
+            </div>
+            <div class="footer-links">
+                <a href="demo.html" style="color: var(--accent);">Visual Intel (Demo)</a>
+                <a href="privacy.html">Privacy Protocol</a>
+                <a href="terms.html">Terms of Engagement</a>
+                <a href="architecture.html">System Architecture</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    // The Data Payloads for each terminal
+    const protocols = [
+        { id: 'type-hunter', text: "> PROTOCOL: HUNTER\n> ACQUIRING TARGETS...\n> 47 ENTITIES FOUND.\n_" },
+        { id: 'type-extractor', text: "> TARGET: domain_A.com... <span style='color:#3b82f6'>[2 EMAILS]</span>\n> TARGET: domain_B.com... <span style='color:#3b82f6'>[IG HANDLE]</span>\n> TARGET: domain_C.net... <span style='color:#3b82f6'>[1 EMAIL]</span>\n> BYPASSING CLOUDFLARE... <span style='color:#10b981'>[SUCCESS]</span>\n_" },
+        { id: 'type-pitcher', text: "> GENERATING PERSONALIZATION...\n\n\"I noticed your site's load time is 4.2s, causing a 30% drop in conversion...\"\n\n> STATUS: READY FOR DISPATCH.\n_" },
+        { id: 'type-dispatcher', text: "[14:02:11] Initiating anti-spam jitter...\n<span style='color:#10b981'>[14:02:15] Delivered -> target_A@domain.com</span>\n[14:02:42] Delaying next send (27s)...\n<span style='color:#10b981'>[14:03:09] Delivered -> target_B@domain.com</span>\n_" }
+    ];
+
+    // The core typing function
+    function typeWriter(elementId, text) {
+        const container = document.getElementById(elementId);
+        if (!container) return;
+        container.innerHTML = ''; 
+        
+        let i = 0;
+        let isTag = false;
+        let textBuffer = '';
+
+        function type() {
+            if (i < text.length) {
+                let char = text.charAt(i);
+                
+                // Instantly inject HTML tags so colors render properly during typing
+                if (char === '<') isTag = true;
+                if (isTag) {
+                    textBuffer += char;
+                    if (char === '>') {
+                        isTag = false;
+                        container.innerHTML += textBuffer;
+                        textBuffer = '';
+                    }
+                } else if (char === '\n') {
+                    container.innerHTML += '<br>';
+                } else {
+                    container.innerHTML += char;
+                }
+                
+                i++;
+                // Randomize typing speed for a human/live-server feel
+                let delay = isTag ? 0 : (Math.random() * 30 + 15);
+                setTimeout(type, delay);
+            }
+        }
+        setTimeout(type, 400); // Slight pause before writing begins
+    }
+
+    // Scroll Observer: Triggers the typing effect ONLY when the box enters the viewport
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const protocol = protocols.find(p => p.id === entry.target.id);
+                // Ensure it only types once per load
+                if (protocol && !entry.target.classList.contains('typing-started')) {
+                    entry.target.classList.add('typing-started');
+                    typeWriter(protocol.id, protocol.text);
+                }
+            }
+        });
+    }, { threshold: 0.5 }); // Executes when 50% of the box is visible on screen
+
+    // Attach the observer to our 4 new IDs
+    protocols.forEach(p => {
+        const el = document.getElementById(p.id);
+        if (el) observer.observe(el);
+    });
+</script>
+</body>
+</html>

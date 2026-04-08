@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Architecture | SortingSource</title>
+    <style>
+        :root { 
+            --bg: #050505; 
+            --text: #888; 
+            --accent: #2563eb; 
+            --accent-glow: rgba(37, 99, 235, 0.2);
+            --mono: 'Fira Code', 'Courier New', monospace; 
+        }
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            font-family: var(--mono); 
+            padding: 4rem 2rem; 
+            max-width: 900px; 
+            margin: 0 auto; 
+            line-height: 1.8; 
+            background-image: radial-gradient(circle, #111 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        h1, h2, h3 { color: #fff; text-transform: uppercase; letter-spacing: 0.05em; }
+        h1 { border-bottom: 1px dashed #333; padding-bottom: 1rem; margin-bottom: 3rem; }
+        .back-btn { display: inline-block; margin-bottom: 2rem; color: var(--accent); text-decoration: none; font-size: 0.9rem; }
+        .back-btn:hover { color: #fff; text-shadow: 0 0 10px rgba(37, 99, 235, 0.5); }
+        .clause { margin-bottom: 4rem; }
+        .green { color: #10b981; }
+
+        /* --- CREDENTIAL MATRIX STYLES --- */
+        .key-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .key-card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            padding: 2rem;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        .key-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background: #333;
+            transition: all 0.3s ease;
+        }
+        .key-card:hover {
+            border-color: var(--accent);
+            box-shadow: inset 0 0 20px var(--accent-glow), 0 10px 30px rgba(0,0,0,0.5);
+            transform: translateY(-3px);
+        }
+        .key-card:hover::before { background: var(--accent); }
+        .key-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
+        .key-card p { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; line-height: 1.4; }
+        .key-link {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.5rem 1rem;
+            background: rgba(37, 99, 235, 0.1);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            text-decoration: none;
+            letter-spacing: 0.1em;
+            transition: all 0.3s ease;
+        }
+        .key-link:hover {
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 0 15px var(--accent-glow);
+        }
+        .app-password-box {
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px dashed #10b981;
+            padding: 1.5rem;
+            margin-top: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">&lt;_ RETURN TO MAIN SYSTEM</a>
+    <h1>System Architecture v2.1</h1>
+    
+    <div class="clause">
+        <h2>> Engine Specifications</h2>
+        <p>Pitch Engine v2.1 operates as a standalone compiled executable. Core CRM data is managed via a local <code>outbound_crm.db</code> file. AI Synthesis is dynamically routed; our 'Model Override' feature allows users to manually inject the latest provider strings (e.g., gpt-4o, gemini-1.5-pro) without requiring a software patch.</p>
+    </div>
+
+    <div class="clause">
+        <h2>> Credential Acquisition Matrix</h2>
+        <p>To initialize the Pitch Engine, you must supply active API parameters from your preferred intelligence and data providers. Generate your secure tokens below.</p>
+        
+        <div class="key-grid">
+            <div class="key-card">
+                <h3>Google Places API</h3>
+                <p>Fuels the "Hunter" module. Required for deep-scanning local business data and technical extraction.</p>
+                <a href="https://console.cloud.google.com/" target="_blank" class="key-link">Generate Token &gt;_</a>
+            </div>
+
+            <div class="key-card">
+                <h3>Google Gemini AI</h3>
+                <p>The primary synthesis engine. Generates hyper-personalized pitch parameters based on extracted data.</p>
+                <a href="https://aistudio.google.com/app/apikey" target="_blank" class="key-link">Generate Token &gt;_</a>
+            </div>
+
+            <div class="key-card">
+                <h3>OpenAI (ChatGPT)</h3>
+                <p>Secondary synthesis option. Compatible with gpt-4, gpt-4o, and gpt-turbo model overrides.</p>
+                <a href="https://platform.openai.com/api-keys" target="_blank" class="key-link">Generate Token &gt;_</a>
+            </div>
+
+            <div class="key-card">
+                <h3>Twilio SMS Gateway</h3>
+                <p>Required for mobile text dispatch. Secure your Account SID and Auth Token to bypass standard carrier blocks.</p>
+                <a href="https://console.twilio.com/" target="_blank" class="key-link">Generate Token &gt;_</a>
+            </div>
+        </div>
+
+        <div class="app-password-box">
+            <h3 style="color: #10b981; margin-bottom: 0.5rem;">[CRITICAL] SMTP Authentication (App Passwords)</h3>
+            <p style="font-size: 0.9rem; color: #888;">To dispatch emails via standard providers (Gmail, Outlook) without triggering security locks, you <strong>cannot</strong> use your master login password. You must generate a dedicated 16-digit "App Password". Ensure 2-Factor Authentication is enabled on your provider account before generating.</p>
+            <a href="https://myaccount.google.com/apppasswords" target="_blank" class="key-link" style="border-color: #10b981; color: #10b981;">Generate Gmail App Password &gt;_</a>
+        </div>
+    </div>
+    
+    <div class="clause">
+        <h2>> System Requirements</h2>
+        <ul>
+            <li><span class="green">OS:</span> Windows 10 / Windows 11 (Delivered as a standalone .exe)</li>
+            <li><span class="green">Storage:</span> < 1GB Local Disk Space (Ultra-lightweight footprint)</li>
+      
+        </ul>
+    </div>
+</body>
+</html>
