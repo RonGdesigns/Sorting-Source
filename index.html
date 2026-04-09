@@ -12,7 +12,7 @@
             --accent-blue: #2563eb;
             --accent-purple: #8b5cf6;
             --accent-glow: rgba(37, 99, 235, 0.4);
-            --inner-glow: rgba(37, 99, 235, 0.2); /* For the subtle inner glow */
+            --inner-glow: rgba(37, 99, 235, 0.2); 
             --text-main: #ffffff;
             --text-muted: #888888;
             --terminal-green: #10b981;
@@ -44,7 +44,6 @@
             text-align: center;
             padding: 2rem;
             position: relative;
-            /* THE VISUAL INJECTION: Image with a heavy 85% to 95% dark gradient overlay */
             background: linear-gradient(to bottom, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.98)), url('cube.png') no-repeat center center;
             background-size: cover;
             border-bottom: 1px solid #222;
@@ -155,7 +154,6 @@
         
         /* --- VISUALIZERS (The Displays) --- */
         .visual-container {
-            /* UPGRADED: Added transparency and blur so the background image shows through */
             background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
@@ -193,13 +191,11 @@
             font-family: var(--font-mono);
             font-size: 0.9rem;
             height: 100%;
-            /* Apply text flash animation to all terminal bodies */
             animation: textFlash 4s infinite linear;
         }
 
         /* Display Variants */
         .display-hunter { color: var(--terminal-green); }
-        
         .display-extractor {
             color: var(--text-muted);
             display: flex;
@@ -230,21 +226,16 @@
             padding-left: 1rem;
             animation: pulseGlow 2s infinite;
         }
-
-        .display-dispatcher {
-            color: #ef4444;
-        }
+        .display-dispatcher { color: #ef4444; }
         .log-entry { margin-bottom: 0.5rem; font-size: 0.8rem; }
         .log-success { color: var(--terminal-green); }
 
-        /* Animations */
         @keyframes fadeIn { to { opacity: 1; } }
         @keyframes pulseGlow {
             0% { border-color: rgba(139, 92, 246, 0.2); }
             50% { border-color: rgba(139, 92, 246, 1); }
             100% { border-color: rgba(139, 92, 246, 0.2); }
         }
-        /* Subtle text flash from prompt - very slight opacity variations */
         @keyframes textFlash {
             0%, 100% { opacity: 1; }
             25% { opacity: 0.98; }
@@ -252,139 +243,149 @@
             75% { opacity: 0.99; }
         }
 
-        /* --- THE ARSENAL SECTION --- */
+        /* --- THE BENTO ARSENAL UPGRADE --- */
         .arsenal {
             padding: 8rem 2rem;
-            background: linear-gradient(to bottom, transparent, rgba(37,99,235,0.05));
+            background: linear-gradient(to bottom, transparent, rgba(37,99,235,0.02));
         }
         .pricing-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            /* Enforces the single-row Bento layout on desktop */
+            grid-template-columns: 1fr 1.1fr 1fr;
+            gap: 1.5rem;
             max-width: 1200px;
             margin: 0 auto;
+            align-items: stretch;
         }
+        
         .card {
-            background: var(--surface-color);
-            border: 1px solid #333;
-            border-radius: 16px;
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(10, 10, 10, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 24px; /* Heavy Bento curve */
             padding: 2.5rem;
             display: flex;
             flex-direction: column;
             position: relative;
             transition: all 0.3s ease;
-            /* Inner Glow from prompt */
-            box-shadow: inset 0 0 15px var(--inner-glow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
+            backdrop-filter: blur(10px);
         }
         .card:hover { 
             transform: translateY(-5px);
-            /* Increase glow on hover for engagement */
-            box-shadow: inset 0 0 25px var(--inner-glow),
-                        0 10px 30px rgba(0,0,0,0.5);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,255,255,0.15);
         }
+        
         .card.popular {
-            border-color: var(--accent-blue);
-            /* Add outer glow + Inner Glow */
-            box-shadow: inset 0 0 15px var(--inner-glow),
-                        0 0 30px var(--accent-glow);
+            background: linear-gradient(145deg, rgba(37, 99, 235, 0.1), rgba(10, 10, 10, 0.95));
+            border: 1px solid rgba(37, 99, 235, 0.3);
+            box-shadow: 0 10px 40px rgba(37, 99, 235, 0.1), inset 0 1px 0 rgba(255,255,255,0.1);
         }
+        
         .popular-tag {
             position: absolute;
-            top: -12px;
+            top: -14px;
             left: 50%;
             transform: translateX(-50%);
             background: var(--accent-blue);
             color: white;
             font-size: 0.7rem;
             font-weight: bold;
-            padding: 0.25rem 1rem;
+            padding: 0.3rem 1.2rem;
             border-radius: 20px;
             text-transform: uppercase;
+            box-shadow: 0 0 20px var(--accent-glow);
+        }
+
+        /* The Bento Price Compartment */
+        .bento-price-box {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            box-shadow: inset 0 5px 15px rgba(0,0,0,0.5);
         }
         .price {
-            font-size: 3rem;
+            font-size: 2.5rem;
             font-weight: 800;
-            margin: 1rem 0;
             display: flex;
             align-items: baseline;
+            justify-content: center;
         }
         .price span { font-size: 1rem; color: var(--text-muted); font-weight: normal; margin-left: 0.5rem;}
+        
         ul.features {
             list-style: none;
-            margin: 2rem 0;
+            margin: 0 0 2rem 0;
             flex-grow: 1;
         }
         ul.features li {
-            margin-bottom: 1rem;
+            padding: 0.75rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.05);
             font-size: 0.95rem;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            gap: 0.75rem;
         }
-        ul.features li::before {
-            content: '✓';
-            color: var(--accent-blue);
-        }
-        .card .btn { width: 100%; margin-top: auto; }
+        ul.features li:last-child { border-bottom: none; }
+        ul.features li::before { content: '✓'; color: var(--accent-blue); font-weight: bold; }
+        
+        .card .btn { width: 100%; margin-top: auto; border-radius: 12px; }
 
-        /* --- CONTACT BOTTOM --- */
+        /* Bento Custom Deployment Section */
         .custom-deployment {
-            max-width: 800px;
-            margin: 5rem auto 2rem;
+            max-width: 1200px;
+            margin: 1.5rem auto 2rem;
             text-align: center;
-            background: rgba(10, 10, 10, 0.8);
-            border: 1px solid #222;
+            background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(10, 10, 10, 0.95));
+            border: 1px solid rgba(255, 255, 255, 0.05);
             padding: 3rem;
-            border-radius: 16px;
+            border-radius: 24px;
             backdrop-filter: blur(10px);
-            /* Inner Glow from prompt */
-            box-shadow: inset 0 0 15px var(--inner-glow);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.05);
         }
         .custom-deployment h4 { margin-bottom: 1rem; font-size: 1.5rem; }
-        .custom-deployment p { color: var(--text-muted); margin-bottom: 2rem; }
+        .custom-deployment p { color: var(--text-muted); margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;}
+        .custom-deployment .btn { border-radius: 12px; }
 
-       /* --- MOBILE OVERRIDE PROTOCOLS (INDEX) --- */
+        /* --- MOBILE OVERRIDE PROTOCOLS (INDEX) --- */
         @media (max-width: 768px) {
-            /* GLOBAL LOCKDOWN: Kills horizontal wobble */
             body, html { overflow-x: hidden; width: 100%; }
-            
-            /* HERO COMPRESSION */
             .hero h1 { font-size: 2.5rem; margin-top: 2rem; }
             .hero p { font-size: 1rem; padding: 0 1rem; }
             .btn-group { flex-direction: column; width: 100%; gap: 0.5rem; }
             .btn-group .btn { width: 100%; }
 
-            /* ENGINE STACKING */
             .engine, .arsenal { padding: 4rem 1rem; }
             .split-layout { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 4rem; }
             .split-layout.reverse .step-content, .split-layout.reverse .visual-container { grid-column: auto; grid-row: auto; }
             
-            /* CONTAINING THE CINEMATIC BACKGROUNDS */
             .step-bg-1, .step-bg-2, .step-bg-3, .step-bg-4 {
-                margin-left: 0;
-                margin-right: 0;
+                margin-left: 0; margin-right: 0;
                 padding: 3rem 1rem;
                 border-radius: 12px;
             }
 
-            /* TERMINAL SHRINKAGE */
             .visual-container { min-height: 220px; }
             .display-body { padding: 3rem 1rem 1rem 1rem; font-size: 0.75rem; }
             
-            /* ARSENAL STACKING */
+            /* Stacks the Bento grid on mobile */
             .pricing-grid { grid-template-columns: 1fr; }
-            .custom-deployment { padding: 2rem 1rem; }
+            .custom-deployment { padding: 2rem 1rem; border-radius: 16px; }
         }
+
         /* --- SYSTEM FOOTER (BULLETPROOF VERSION) --- */
         .system-footer {
             border-top: 1px dashed #222;
             padding: 3rem 2rem;
             margin-top: 2rem;
             font-size: 0.85rem;
-            color: #888888; /* Hardcoded color */
+            color: #888888; 
             background: #050505;
-            position: relative; /* SHIELD: Pulls footer above backgrounds */
-            z-index: 10;        /* SHIELD: Locks it to the top layer */
+            position: relative; 
+            z-index: 10; 
         }
         .footer-content {
             max-width: 1200px;
@@ -407,7 +408,7 @@
             text-transform: uppercase;
         }
         .rights {
-            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
+            font-family: 'Fira Code', 'Courier New', monospace; 
             font-size: 0.7rem;
             color: #555;
         }
@@ -416,8 +417,8 @@
             gap: 2rem;
         }
         .footer-links a {
-            color: #888888; /* Hardcoded color */
-            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
+            color: #888888; 
+            font-family: 'Fira Code', 'Courier New', monospace; 
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
@@ -429,41 +430,22 @@
         }
 
         @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
+            .footer-content { flex-direction: column; text-align: center; gap: 2rem; }
+            .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
         }
 
         /* --- SEAMLESS IMAGE TRANSITIONS FOR THE ENGINE ROWS --- */
-        /* This creates the smooth fade-in and fade-out into the background */
         .step-bg-1, .step-bg-2, .step-bg-3, .step-bg-4 {
             position: relative;
-            padding: 4rem 2rem; /* Adds breathing room for the background image */
-            margin-left: -2rem; /* Expands slightly to maintain layout */
+            padding: 4rem 2rem; 
+            margin-left: -2rem; 
             margin-right: -2rem;
             border-radius: 20px;
         }
-        
-        .step-bg-1 {
-            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('1st.png') no-repeat center center;
-            background-size: cover;
-        }
-        
-        .step-bg-2 {
-            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('2nd.png') no-repeat center center;
-            background-size: cover;
-        }
-        
-        .step-bg-3 {
-            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('3rd.png') no-repeat center center;
-            background-size: cover;
-        }
-        
-        .step-bg-4 {
-            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('4th.png') no-repeat center center;
-            background-size: cover;
-        }
+        .step-bg-1 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('1st.png') no-repeat center center; background-size: cover; }
+        .step-bg-2 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('2nd.png') no-repeat center center; background-size: cover; }
+        .step-bg-3 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('3rd.png') no-repeat center center; background-size: cover; }
+        .step-bg-4 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('4th.png') no-repeat center center; background-size: cover; }
     </style>
 </head>
 <body>
@@ -552,7 +534,7 @@
         </div>
 
         <div style="text-align: center; margin-bottom: 5rem;">
-            <a href="demo.html" class="btn btn-primary" style="font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 1.5rem 3rem; font-size: 1.1rem;">
+            <a href="demo.html" class="btn btn-primary" style="font-family: var(--font-mono); text-transform: uppercase; letter-spacing: 0.1em; padding: 1.5rem 3rem; font-size: 1.1rem; border-radius: 12px;">
                 <span style="color: #ef4444; margin-right: 10px; text-shadow: 0 0 10px #ef4444;">⏺ REC</span> Watch The System Demo
             </a>
         </div>
@@ -561,7 +543,11 @@
             <div class="card">
                 <h3>1-Key License</h3>
                 <p style="color: var(--text-muted); font-size:0.9rem;">For the Solo Mercenary</p>
-                <div class="price">$2,000<span>/ one-time</span></div>
+                
+                <div class="bento-price-box">
+                    <div class="price">$2,000<span>/ one-time</span></div>
+                </div>
+                
                 <ul class="features">
                     <li>1 Device License</li>
                     <li>Unlimited Local Lead Gen</li>
@@ -576,7 +562,11 @@
                 <div class="popular-tag">Most Popular</div>
                 <h3>5-Key License</h3>
                 <p style="color: var(--text-muted); font-size:0.9rem;">For the Agency Taskforce</p>
-                <div class="price">$8,750<span>/ one-time</span></div>
+                
+                <div class="bento-price-box">
+                    <div class="price">$8,750<span>/ one-time</span></div>
+                </div>
+
                 <ul class="features">
                     <li>5 Device Licenses</li>
                     <li>Unlimited Local Lead Gen</li>
@@ -590,7 +580,11 @@
             <div class="card">
                 <h3>10-Key License</h3>
                 <p style="color: var(--text-muted); font-size:0.9rem;">For the Enterprise Command</p>
-                <div class="price">$15,000<span>/ one-time</span></div>
+                
+                <div class="bento-price-box">
+                    <div class="price">$15,000<span>/ one-time</span></div>
+                </div>
+
                 <ul class="features">
                     <li>10 Device Licenses</li>
                     <li>Unlimited Local Lead Gen</li>
@@ -605,7 +599,7 @@
         <div class="custom-deployment">
             <h4>🛡️ CUSTOM DEPLOYMENT REQUIRED?</h4>
             <p>If your operation requires more than 10 keys, or if you need a custom enterprise configuration for large-scale teams, contact the lead architect directly for a tailored quote.</p>
-            <a href="mailto:ER6798@GMAIL.COM" class="btn btn-primary">✉ EMAIL: ER6798@GMAIL.COM</a>
+            <a href="mailto:Ron@sortingsource.com" class="btn btn-primary">✉ EMAIL: Ron@sortingsource.com</a>
         </div>
     </section>
 
@@ -617,17 +611,16 @@
             </div>
             <div class="footer-links">
                 <a href="how-it-works.html" style="color: #0dbd48;">How It Works</a>
-                <a href="demo.html" style="color: var(--accent-blue);">Visual Intel (Demo)</a>
+                <a href="architecture.html" style="color: #e40f08;">System Architecture</a>
+                <a href="demo.html" style="color: #2563eb;">Visual Intel (Demo)</a>
                 <a href="models.html" style="color: #8b5cf6;">Synthesis Models</a>
                 <a href="privacy.html">Privacy Protocol</a>
                 <a href="terms.html">Terms of Engagement</a>
-                <a href="architecture.html" style="color: #e40f08;">System Architecture</a>
             </div>
         </div>
     </footer>
 
     <script>
-    // The Data Payloads for each terminal
     const protocols = [
         { id: 'type-hunter', text: "> PROTOCOL: HUNTER\n> ACQUIRING TARGETS...\n> 47 ENTITIES FOUND.\n_" },
         { id: 'type-extractor', text: "> TARGET: domain_A.com... <span style='color:#3b82f6'>[2 EMAILS]</span>\n> TARGET: domain_B.com... <span style='color:#3b82f6'>[IG HANDLE]</span>\n> TARGET: domain_C.net... <span style='color:#3b82f6'>[1 EMAIL]</span>\n> BYPASSING CLOUDFLARE... <span style='color:#10b981'>[SUCCESS]</span>\n_" },
@@ -635,7 +628,6 @@
         { id: 'type-dispatcher', text: "[14:02:11] Initiating anti-spam jitter...\n<span style='color:#10b981'>[14:02:15] Delivered -> target_A@domain.com</span>\n[14:02:42] Delaying next send (27s)...\n<span style='color:#10b981'>[14:03:09] Delivered -> target_B@domain.com</span>\n_" }
     ];
 
-    // The core typing function
     function typeWriter(elementId, text) {
         const container = document.getElementById(elementId);
         if (!container) return;
@@ -649,7 +641,6 @@
             if (i < text.length) {
                 let char = text.charAt(i);
                 
-                // Instantly inject HTML tags so colors render properly during typing
                 if (char === '<') isTag = true;
                 if (isTag) {
                     textBuffer += char;
@@ -665,29 +656,25 @@
                 }
                 
                 i++;
-                // Randomize typing speed for a human/live-server feel
                 let delay = isTag ? 0 : (Math.random() * 30 + 15);
                 setTimeout(type, delay);
             }
         }
-        setTimeout(type, 400); // Slight pause before writing begins
+        setTimeout(type, 400); 
     }
 
-    // Scroll Observer: Triggers the typing effect ONLY when the box enters the viewport
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 const protocol = protocols.find(p => p.id === entry.target.id);
-                // Ensure it only types once per load
                 if (protocol && !entry.target.classList.contains('typing-started')) {
                     entry.target.classList.add('typing-started');
                     typeWriter(protocol.id, protocol.text);
                 }
             }
         });
-    }, { threshold: 0.5 }); // Executes when 50% of the box is visible on screen
+    }, { threshold: 0.5 }); 
 
-    // Attach the observer to our 4 new IDs
     protocols.forEach(p => {
         const el = document.getElementById(p.id);
         if (el) observer.observe(el);
