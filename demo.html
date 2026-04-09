@@ -139,6 +139,82 @@
         </div>
         <p class="module-desc"><strong>Phase 4:</strong> The Follow-Up Protocol. Your entire outbound history is logged locally. View a complete audit trail of the entities you have reached out to, allowing you to monitor active engagements and execute precise follow-ups without leaving the software.</p>
     </div>
+    <footer class="system-footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="company-name">© 2026 Sorting Source LLC.</span>
+                <span class="rights">ALL SYSTEMS OPERATIONAL // ALL RIGHTS RESERVED.</span>
+            </div>
+            <div class="footer-links">
+                <a href="how-it-works.html" style="color: #0dbd48;">How It Works</a>
+                <a href="demo.html" style="color: #2563eb;">Visual Intel (Demo)</a>
+                <a href="models.html" style="color: #8b5cf6;">Synthesis Models</a>
+                <a href="privacy.html">Privacy Protocol</a>
+                <a href="terms.html">Terms of Engagement</a>
+                <a href="architecture.html" style="color: #e40f08;">System Architecture</a>
+            </div>
+        </div>
+    </footer>
+    <style>
+        /* --- SYSTEM FOOTER (BULLETPROOF VERSION) --- */
+        .system-footer {
+            border-top: 1px dashed #222;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #888888; /* Hardcoded color */
+            background: #050505;
+            position: relative; /* SHIELD: Pulls footer above backgrounds */
+            z-index: 10;        /* SHIELD: Locks it to the top layer */
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .company-name {
+            color: #ccc;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .rights {
+            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
+            font-size: 0.7rem;
+            color: #555;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-links a {
+            color: #888888; /* Hardcoded color */
+            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #2563eb;
+            text-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
+        }
 
+        @media (max-width: 768px) {
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+</style>
 </body>
 </html>

@@ -3,9 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SortingSource | Weapons-Grade Lead Gen</title>
-    
-    <link rel="icon" type="image/png" href="fico.png">
+    <title>SortingSource | Algorithmic Lead Synthesis Lead Gen</title>
     <style>
         /* --- THE AESTHETIC VARIABLES --- */
         :root {
@@ -45,6 +43,11 @@
             align-items: center;
             text-align: center;
             padding: 2rem;
+            position: relative;
+            /* THE VISUAL INJECTION: Image with a heavy 85% to 95% dark gradient overlay */
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.98)), url('cube.png') no-repeat center center;
+            background-size: cover;
+            border-bottom: 1px solid #222;
         }
         .status-badge {
             font-family: var(--font-mono);
@@ -152,13 +155,14 @@
         
         /* --- VISUALIZERS (The Displays) --- */
         .visual-container {
-            background: #000;
+            /* UPGRADED: Added transparency and blur so the background image shows through */
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid #222;
             border-radius: 12px;
             overflow: hidden;
-            /* Outer shadow + Subtler Inner Glow from prompt */
-            box-shadow: 0 20px 50px rgba(0,0,0,0.5),
-                        inset 0 0 15px var(--inner-glow); 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5), inset 0 0 15px var(--inner-glow); 
             position: relative;
             min-height: 280px;
         }
@@ -344,14 +348,16 @@
             .split-layout { grid-template-columns: 1fr; gap: 2rem; }
             .split-layout.reverse .step-content, .split-layout.reverse .visual-container { grid-column: auto; grid-row: auto; }
         }
-        /* --- SYSTEM FOOTER --- */
+        /* --- SYSTEM FOOTER (BULLETPROOF VERSION) --- */
         .system-footer {
             border-top: 1px dashed #222;
             padding: 3rem 2rem;
             margin-top: 2rem;
             font-size: 0.85rem;
-            color: var(--text-muted);
+            color: #888888; /* Hardcoded color */
             background: #050505;
+            position: relative; /* SHIELD: Pulls footer above backgrounds */
+            z-index: 10;        /* SHIELD: Locks it to the top layer */
         }
         .footer-content {
             max-width: 1200px;
@@ -374,7 +380,7 @@
             text-transform: uppercase;
         }
         .rights {
-            font-family: var(--font-mono);
+            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
             font-size: 0.7rem;
             color: #555;
         }
@@ -383,16 +389,16 @@
             gap: 2rem;
         }
         .footer-links a {
-            color: var(--text-muted);
-            font-family: var(--font-mono);
+            color: #888888; /* Hardcoded color */
+            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
             font-size: 0.75rem;
             text-transform: uppercase;
             letter-spacing: 0.05em;
             transition: color 0.3s ease;
         }
         .footer-links a:hover {
-            color: var(--accent-blue);
-            text-shadow: 0 0 8px var(--accent-glow);
+            color: #2563eb;
+            text-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
         }
 
         @media (max-width: 768px) {
@@ -401,13 +407,43 @@
                 text-align: center;
             }
         }
+
+        /* --- SEAMLESS IMAGE TRANSITIONS FOR THE ENGINE ROWS --- */
+        /* This creates the smooth fade-in and fade-out into the background */
+        .step-bg-1, .step-bg-2, .step-bg-3, .step-bg-4 {
+            position: relative;
+            padding: 4rem 2rem; /* Adds breathing room for the background image */
+            margin-left: -2rem; /* Expands slightly to maintain layout */
+            margin-right: -2rem;
+            border-radius: 20px;
+        }
+        
+        .step-bg-1 {
+            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('1st.png') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .step-bg-2 {
+            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('2nd.png') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .step-bg-3 {
+            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('3rd.png') no-repeat center center;
+            background-size: cover;
+        }
+        
+        .step-bg-4 {
+            background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('4th.png') no-repeat center center;
+            background-size: cover;
+        }
     </style>
 </head>
 <body>
 
     <header class="hero">
         <div class="status-badge">&gt;_ SYSTEM ONLINE // V 2.1.0 // NO SUBSCRIPTIONS</div>
-        <h1>Weapons-Grade Lead<br>Generation.<br><span>Zero Monthly Fees.</span></h1>
+        <h1>Autonomous Target <br>Acquisition.<br><span>Zero Monthly Fees.</span></h1>
         <p>SortingSource is the ultimate "Anti-SaaS" outbound engine. Pay once, own the engine forever, and generate an unlimited pipeline of leads stored locally on your machine.</p>
         <div class="btn-group">
             <a href="#arsenal" class="btn btn-primary">Acquire Your License</a>
@@ -421,7 +457,7 @@
             <p>Automated end-to-end execution.</p>
         </div>
 
-        <div class="split-layout">
+        <div class="split-layout step-bg-1">
             <div class="step-content">
                 <h3>1. The Hunter</h3>
                 <span class="tag">Target Acquisition</span>
@@ -433,11 +469,10 @@
                     <span class="terminal-title">ACTIVE_PROTOCOL_MONITOR</span>
                 </div>
                 <div class="display-body display-hunter" id="type-hunter"></div>
-                    </div>
             </div>
         </div>
 
-        <div class="split-layout reverse">
+        <div class="split-layout reverse step-bg-2">
             <div class="step-content">
                 <h3>2. The Extractor</h3>
                 <span class="tag">Deep Data Mining</span>
@@ -452,7 +487,7 @@
             </div>
         </div>
 
-        <div class="split-layout">
+        <div class="split-layout step-bg-3">
             <div class="step-content">
                 <h3>3. The Pitcher</h3>
                 <span class="tag" style="color: var(--accent-purple);">Gemini AI Synthesis</span>
@@ -464,12 +499,10 @@
                     <span class="terminal-title">LLM_SYNTHESIS_ENGINE</span>
                 </div>
                 <div class="display-body display-pitcher" id="type-pitcher"></div>
-                    <div class="display-body display-pitcher" id="type-pitcher"></div>
-                </div>
             </div>
         </div>
 
-        <div class="split-layout reverse">
+        <div class="split-layout reverse step-bg-4">
             <div class="step-content">
                 <h3>4. The Dispatcher</h3>
                 <span class="tag" style="color: #ef4444;">Stealth-Mode Inbox Delivery</span>
@@ -556,10 +589,12 @@
                 <span class="rights">ALL SYSTEMS OPERATIONAL // ALL RIGHTS RESERVED.</span>
             </div>
             <div class="footer-links">
-                <a href="demo.html" style="color: var(--accent);">Visual Intel (Demo)</a>
+                <a href="how-it-works.html" style="color: #0dbd48;">How It Works</a>
+                <a href="demo.html" style="color: var(--accent-blue);">Visual Intel (Demo)</a>
+                <a href="models.html" style="color: #8b5cf6;">Synthesis Models</a>
                 <a href="privacy.html">Privacy Protocol</a>
                 <a href="terms.html">Terms of Engagement</a>
-                <a href="architecture.html">System Architecture</a>
+                <a href="architecture.html" style="color: #e40f08;">System Architecture</a>
             </div>
         </div>
     </footer>
