@@ -22,34 +22,38 @@
             color: var(--text); 
             font-family: var(--sans); 
             min-height: 100vh;
-            position: relative;
+            overflow-x: hidden;
+            display: flex;          /* Activates Flexbox Sticky Footer */
+            flex-direction: column; 
         }
 
-        /* THE VIRTUAL CANVAS: Creates a flawless fade regardless of image size */
+        /* FIXED VIEWPORT CANVAS: Locks the ai.png wallpaper perfectly to the screen */
         body::before {
             content: '';
-            position: absolute;
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 120vh; /* Stretches the image slightly past the initial screen */
-            background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.2) 0%, rgba(5, 5, 5, 0.8) 60%, #050505 100%), url('ai.png');
+            width: 100vw;
+            height: 100vh; 
+            background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.4) 0%, rgba(5, 5, 5, 0.95) 100%), url('ai.png');
             background-repeat: no-repeat;
-            background-position: top center;
+            background-position: center center;
             background-size: cover;
-            z-index: 0; /* Keeps it strictly in the background */
+            z-index: 0; 
             pointer-events: none;
         }
 
-        /* We add a massive top padding to create the "Full Screen Image" feel before they scroll into the cards */
+        /* TEXT CONTAINER: Pulls text safely above the image */
         .container { 
             max-width: 1000px; 
             margin: 0 auto; 
             line-height: 1.8; 
             position: relative; 
             z-index: 2; 
-            padding: 4rem 2rem;
-            padding-top: 25vw; /* Pushes the main cards down so the image dominates the load screen */
+            /* UPGRADED: Standard padding. Text starts at the top of the screen now. */
+            padding: 6rem 2rem 4rem 2rem;
+            flex-grow: 1;      /* Forces container to expand and crush the footer to the bottom */
+            width: 100%;
         }
         
         h1, h2, h3 { color: #fff; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--mono); }
@@ -69,12 +73,14 @@
         
         .node-card {
             background: rgba(10, 10, 10, 0.75);
-            border: 1px solid #333;
+            border: 1px solid rgba(255, 255, 255, 0.05);
             border-left: 3px solid var(--accent);
             padding: 2.5rem;
-            border-radius: 4px;
+            border-radius: 8px;
             backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
             transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
         .node-card:hover {
             background: rgba(15, 15, 15, 0.9);
@@ -98,13 +104,77 @@
         .node-openai { border-left-color: #10b981; }
         .node-openai h2 span { color: #10b981; background: rgba(16, 185, 129, 0.1); }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            body { background-size: auto 100%; /* Prevents the image from getting too small on phones */ }
-            .container { padding-top: 40vh; }
-            .node-card h2 { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
+        /* --- SYSTEM FOOTER (BULLETPROOF VERSION) --- */
+        .system-footer {
+            border-top: 1px dashed #222;
+            padding: 3rem 2rem;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #888888; 
+            background: #050505;
+            position: relative; 
+            z-index: 10;        
+        }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        .footer-brand {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .company-name {
+            color: #ccc;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+        .rights {
+            font-family: 'Fira Code', 'Courier New', monospace; 
+            font-size: 0.7rem;
+            color: #555;
+        }
+        .footer-links {
+            display: flex;
+            gap: 2rem;
+        }
+        .footer-links a {
+            color: #888888; 
+            font-family: 'Fira Code', 'Courier New', monospace; 
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            transition: color 0.3s ease;
+        }
+        .footer-links a:hover {
+            color: #2563eb;
+            text-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
         }
 
+        /* --- MOBILE OVERRIDE PROTOCOLS (MODELS) --- */
+        @media (max-width: 768px) {
+            body, html { overflow-x: hidden; width: 100%; }
+            
+            .container { padding: 4rem 1.5rem; }
+            
+            h1 { font-size: 1.8rem; }
+            
+            .node-card { padding: 1.5rem; }
+            .node-card h2 { flex-direction: column; align-items: flex-start; gap: 0.5rem; font-size: 1.25rem; }
+            
+            .tech-specs { flex-direction: column; gap: 0.5rem; }
+
+            /* Footer mobile protocols */
+            .system-footer { padding: 2rem 1rem; }
+            .footer-content { flex-direction: column; text-align: center; gap: 2rem; }
+            .footer-links { flex-wrap: wrap; justify-content: center; gap: 1rem 1.5rem; }
+        }
     </style>
 </head>
 <body>
@@ -150,7 +220,8 @@
 
         </div>
     </div>
-        <footer class="system-footer">
+
+    <footer class="system-footer">
         <div class="footer-content">
             <div class="footer-brand">
                 <span class="company-name">© 2026 Sorting Source LLC.</span>
@@ -169,79 +240,5 @@
             </div>
         </div>
     </footer>
-    <style>
-        /* --- SYSTEM FOOTER (BULLETPROOF VERSION) --- */
-        .system-footer {
-            border-top: 1px dashed #222;
-            padding: 3rem 2rem;
-            margin-top: 2rem;
-            font-size: 0.85rem;
-            color: #888888; /* Hardcoded color */
-            background: #050505;
-            position: relative; /* SHIELD: Pulls footer above backgrounds */
-            z-index: 10;        /* SHIELD: Locks it to the top layer */
-        }
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-        }
-        .footer-brand {
-            display: flex;
-            flex-direction: column;
-            gap: 0.3rem;
-        }
-        .company-name {
-            color: #ccc;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
-        .rights {
-            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
-            font-size: 0.7rem;
-            color: #555;
-        }
-        .footer-links {
-            display: flex;
-            gap: 2rem;
-        }
-        .footer-links a {
-            color: #888888; /* Hardcoded color */
-            font-family: 'Fira Code', 'Courier New', monospace; /* Hardcoded font */
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            transition: color 0.3s ease;
-        }
-        .footer-links a:hover {
-            color: #2563eb;
-            text-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
-        }
-
-        /* --- MOBILE OVERRIDE PROTOCOLS (MODELS) --- */
-        @media (max-width: 768px) {
-            body, html { overflow-x: hidden; width: 100%; }
-            
-            /* Ensures the background image covers the screen without stretching */
-            body::before { background-size: cover; background-position: center top; }
-            
-            /* Adjusts the drop-in point so the image is visible before scrolling */
-            .container { padding-top: 40vh; padding-left: 1rem; padding-right: 1rem; }
-            
-            h1 { font-size: 1.8rem; }
-            
-            /* Card compression */
-            .node-card { padding: 1.5rem; }
-            .node-card h2 { flex-direction: column; align-items: flex-start; gap: 0.5rem; font-size: 1.25rem; }
-            
-            /* Stacks the tech specs vertically */
-            .tech-specs { flex-direction: column; gap: 0.5rem; }
-        }
-</style>
 </body>
 </html>

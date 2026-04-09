@@ -103,6 +103,42 @@
         }
         .btn-secondary:hover { background: #222; }
 
+        /* --- ACTIVE SCROLL PROMPT --- */
+        .scroll-prompt {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            text-decoration: none;
+            opacity: 0.6;
+            transition: opacity 0.3s ease;
+            animation: floatDown 2s infinite ease-in-out;
+        }
+        .scroll-prompt:hover { opacity: 1; }
+        .scroll-text {
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--text-muted);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+        }
+        .chevron-down {
+            width: 12px;
+            height: 12px;
+            border-right: 2px solid var(--accent-blue);
+            border-bottom: 2px solid var(--accent-blue);
+            transform: rotate(45deg);
+            box-shadow: 2px 2px 5px rgba(37, 99, 235, 0.2);
+        }
+        @keyframes floatDown {
+            0%, 100% { transform: translate(-50%, 0); }
+            50% { transform: translate(-50%, 10px); }
+        }
+
         /* --- THE ENGINE SECTION --- */
         .engine {
             padding: 8rem 2rem;
@@ -252,7 +288,6 @@
         }
         .pricing-grid {
             display: grid;
-            /* Enforces the single-row Bento layout on desktop */
             grid-template-columns: 1fr 1.1fr 1fr;
             gap: 1.5rem;
             max-width: 1200px;
@@ -263,7 +298,7 @@
         .card {
             background: linear-gradient(145deg, rgba(20, 20, 20, 0.8), rgba(10, 10, 10, 0.95));
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 24px; /* Heavy Bento curve */
+            border-radius: 24px; 
             padding: 2.5rem;
             display: flex;
             flex-direction: column;
@@ -299,7 +334,6 @@
             box-shadow: 0 0 20px var(--accent-glow);
         }
 
-        /* The Bento Price Compartment */
         .bento-price-box {
             background: rgba(0, 0, 0, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.03);
@@ -336,7 +370,6 @@
         
         .card .btn { width: 100%; margin-top: auto; border-radius: 12px; }
 
-        /* Bento Custom Deployment Section */
         .custom-deployment {
             max-width: 1200px;
             margin: 1.5rem auto 2rem;
@@ -351,6 +384,69 @@
         .custom-deployment h4 { margin-bottom: 1rem; font-size: 1.5rem; }
         .custom-deployment p { color: var(--text-muted); margin-bottom: 2rem; max-width: 800px; margin-left: auto; margin-right: auto;}
         .custom-deployment .btn { border-radius: 12px; }
+
+        /* --- SIDE SCROLL TRACKER --- */
+        .side-scroll-tracker {
+            position: fixed;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            z-index: 50;
+            transition: opacity 0.5s ease, transform 0.5s ease;
+            opacity: 1;
+        }
+        /* The class we add in JS to hide it when the footer appears */
+        .side-scroll-tracker.hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(-50%) translateX(20px);
+        }
+        .tracker-text {
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-family: var(--font-mono);
+            font-size: 0.65rem;
+            color: var(--accent-blue);
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px var(--accent-glow);
+        }
+        .tracker-line {
+            width: 2px;
+            height: 120px;
+            background: rgba(255, 255, 255, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .tracker-progress {
+            width: 100%;
+            height: 30px;
+            background: var(--accent-blue);
+            position: absolute;
+            top: -30px;
+            animation: scrollScan 2.5s infinite linear;
+            box-shadow: 0 0 10px var(--accent-glow);
+        }
+        .tracker-arrow {
+            width: 0; 
+            height: 0; 
+            border-left: 4px solid transparent;
+            border-right: 4px solid transparent;
+            border-top: 6px solid var(--accent-blue);
+        }
+        @keyframes scrollScan {
+            0% { top: -30px; }
+            100% { top: 120px; }
+        }
+
+        /* Hide on very small screens so it doesn't overlap text */
+        @media (max-width: 1024px) {
+            .side-scroll-tracker { display: none; }
+        }
 
         /* --- MOBILE OVERRIDE PROTOCOLS (INDEX) --- */
         @media (max-width: 768px) {
@@ -373,7 +469,6 @@
             .visual-container { min-height: 220px; }
             .display-body { padding: 3rem 1rem 1rem 1rem; font-size: 0.75rem; }
             
-            /* Stacks the Bento grid on mobile */
             .pricing-grid { grid-template-columns: 1fr; }
             .custom-deployment { padding: 2rem 1rem; border-radius: 16px; }
         }
@@ -451,6 +546,13 @@
     </style>
 </head>
 <body>
+    <div class="side-scroll-tracker hidden" id="sideScrollTracker">
+        <div class="tracker-text">Navigation Panel - Scroll</div>
+        <div class="tracker-line">
+            <div class="tracker-progress"></div>
+        </div>
+        <div class="tracker-arrow"></div>
+    </div>
 
     <header class="hero">
         <div class="status-badge">&gt;_ SYSTEM ONLINE // V 2.1.0 // NO SUBSCRIPTIONS</div>
@@ -460,6 +562,11 @@
             <a href="#arsenal" class="btn btn-primary">Acquire Your License</a>
             <a href="#engine" class="btn btn-secondary">View The Arsenal</a>
         </div>
+
+        <a href="#engine" class="scroll-prompt">
+            <span class="scroll-text">SCROLL TO ACCESS SYSTEM</span>
+            <div class="chevron-down"></div>
+        </a>
     </header>
 
     <section id="engine" class="engine">
@@ -684,6 +791,46 @@
         const el = document.getElementById(p.id);
         if (el) observer.observe(el);
     });
+    // --- SMART SIDE TRACKER LOGIC ---
+    const sideTracker = document.getElementById('sideScrollTracker');
+    const heroSection = document.querySelector('.hero');
+    const systemFooter = document.querySelector('.system-footer');
+
+    if (sideTracker && heroSection && systemFooter) {
+        let isAtTop = true;
+        let isAtBottom = false;
+
+        // The Brain: Only show tracker if we are NOT at the top and NOT at the bottom
+        const updateTrackerVisibility = () => {
+            if (isAtTop || isAtBottom) {
+                sideTracker.classList.add('hidden');
+            } else {
+                sideTracker.classList.remove('hidden');
+            }
+        };
+
+        // 1. Watch the Hero Section
+        const heroObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // If even 5% of the hero section is visible, keep it hidden
+                isAtTop = entry.isIntersecting;
+                updateTrackerVisibility();
+            });
+        }, { threshold: 0.05 }); 
+        
+        heroObserver.observe(heroSection);
+
+        // 2. Watch the Footer
+        const footerObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                // If 10% of the footer is visible, hide it
+                isAtBottom = entry.isIntersecting;
+                updateTrackerVisibility();
+            });
+        }, { threshold: 0.1 });
+
+        footerObserver.observe(systemFooter);
+    }
 </script>
 </body>
 </html>
