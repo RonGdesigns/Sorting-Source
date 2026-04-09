@@ -25,32 +25,45 @@
             font-family: var(--sans); 
             min-height: 100vh;
             overflow-x: hidden;
-            position: relative;
+            display: flex;          
+            flex-direction: column; 
+            position: relative; /* REQUIRED: Anchors the absolute video to the full document length */
         }
 
-        /* THE TOWER CANVAS: Stretches from the top to the bottom of the entire scrollable page */
+        /* THE NEW VIDEO BACKGROUND LAYER */
+        .bg-video {
+            position: absolute; /* Releases it from the screen so it scrolls */
+            top: 0;
+            left: 0;
+            width: 100%;        /* Stretches to full document width */
+            height: 100%;       /* Stretches to full document height */
+            object-fit: cover;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* THE CINEMATIC SHADOW OVERLAY */
         body::before {
             content: '';
-            position: absolute;
+            position: absolute; /* Releases it from the screen so it scrolls */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%; 
-            background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.4) 0%, rgba(5, 5, 5, 0.85) 100%), url('pic12.png');
-            background-repeat: no-repeat;
-            background-position: top center;
-            background-size: cover; 
-            z-index: 0; 
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.4) 0%, rgba(5, 5, 5, 0.85) 100%);
+            z-index: 1; 
             pointer-events: none;
         }
 
-        /* Keeps all the text and timeline secure above the background image */
+        /* TEXT CONTAINER: Pulls your timeline above the video and pushes footer down */
         .container { 
             max-width: 1000px; 
             margin: 0 auto; 
             padding: 5rem 2rem;
             position: relative;
             z-index: 2; 
+            flex-grow: 1; 
+            width: 100%;
         }
         
         h1, h2, h3 { color: #fff; text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--mono); }
@@ -308,6 +321,10 @@
     </style>
 </head>
 <body>
+
+    <video autoplay muted playsinline class="bg-video">
+        <source src="video2.mp4" type="video/mp4">
+    </video>
 
     <div class="container">
         <a href="index.html" class="back-btn">&lt;_ RETURN TO MAIN SYSTEM</a>

@@ -24,6 +24,20 @@
         }
 
        
+        /* THE NEW VIDEO BACKGROUND LAYER */
+        .bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover; /* Ensures the video fills the screen without stretching */
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* THE CINEMATIC SHADOW OVERLAY */
+        /* This sits on top of the video to darken it so your text remains readable */
         body::before {
             content: '';
             position: fixed; 
@@ -31,11 +45,8 @@
             left: 0;
             width: 100vw;
             height: 100vh; 
-            background-image: linear-gradient(to bottom, rgba(5, 5, 5, 0.4) 0%, rgba(5, 5, 5, 0.95) 100%), url('privacy.png');
-            background-repeat: no-repeat;
-            background-position: center center;
-            background-size: cover; 
-            z-index: 0; 
+            background: linear-gradient(to bottom, rgba(5, 5, 5, 0.4) 0%, rgba(5, 5, 5, 0.95) 100%);
+            z-index: 1; /* Sits exactly between the video (0) and your container (2) */
             pointer-events: none;
         }
 
@@ -149,6 +160,10 @@
 </head>
 <body>
     
+    <video autoplay muted playsinline class="bg-video">
+        <source src="privacy.mp4" type="video/mp4">
+    </video>
+
     <div class="container">
         <a href="index.html" class="back-btn">&lt;_ RETURN TO MAIN SYSTEM</a>
         <h1>Privacy Protocol v2.1</h1>
