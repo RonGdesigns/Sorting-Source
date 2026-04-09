@@ -343,10 +343,37 @@
         .custom-deployment h4 { margin-bottom: 1rem; font-size: 1.5rem; }
         .custom-deployment p { color: var(--text-muted); margin-bottom: 2rem; }
 
+       /* --- MOBILE OVERRIDE PROTOCOLS (INDEX) --- */
         @media (max-width: 768px) {
-            .hero h1 { font-size: 3rem; }
-            .split-layout { grid-template-columns: 1fr; gap: 2rem; }
+            /* GLOBAL LOCKDOWN: Kills horizontal wobble */
+            body, html { overflow-x: hidden; width: 100%; }
+            
+            /* HERO COMPRESSION */
+            .hero h1 { font-size: 2.5rem; margin-top: 2rem; }
+            .hero p { font-size: 1rem; padding: 0 1rem; }
+            .btn-group { flex-direction: column; width: 100%; gap: 0.5rem; }
+            .btn-group .btn { width: 100%; }
+
+            /* ENGINE STACKING */
+            .engine, .arsenal { padding: 4rem 1rem; }
+            .split-layout { grid-template-columns: 1fr; gap: 2rem; margin-bottom: 4rem; }
             .split-layout.reverse .step-content, .split-layout.reverse .visual-container { grid-column: auto; grid-row: auto; }
+            
+            /* CONTAINING THE CINEMATIC BACKGROUNDS */
+            .step-bg-1, .step-bg-2, .step-bg-3, .step-bg-4 {
+                margin-left: 0;
+                margin-right: 0;
+                padding: 3rem 1rem;
+                border-radius: 12px;
+            }
+
+            /* TERMINAL SHRINKAGE */
+            .visual-container { min-height: 220px; }
+            .display-body { padding: 3rem 1rem 1rem 1rem; font-size: 0.75rem; }
+            
+            /* ARSENAL STACKING */
+            .pricing-grid { grid-template-columns: 1fr; }
+            .custom-deployment { padding: 2rem 1rem; }
         }
         /* --- SYSTEM FOOTER (BULLETPROOF VERSION) --- */
         .system-footer {

@@ -269,12 +269,42 @@
             text-shadow: 0 0 8px var(--accent-glow);
         }
 
+        /* --- MOBILE OVERRIDE PROTOCOLS (HOW IT WORKS) --- */
         @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
+            /* 1. Global Viewport Control: Prevent horizontal swiping */
+            body, html {
+                overflow-x: hidden;
+                width: 100%;
             }
-        } 
+
+            /* 2. Scale down the massive headers */
+            h1 { font-size: 1.8rem; }
+            .subtitle { margin-bottom: 3rem; }
+
+            /* 3. Re-align the Timeline to give text more breathing room */
+            .container { padding: 3rem 1rem; }
+            
+            /* Move the glowing line closer to the left edge */
+            .timeline::after { left: 25px; }
+            
+            /* Move the glowing nodes to perfectly intersect the line */
+            .timeline-module::after { left: 17px; width: 14px; height: 14px; top: 30px; }
+            
+            /* Reduce the massive left padding so the glass boxes fit on screen */
+            .timeline-module { padding: 1rem 0 2rem 60px; }
+
+            /* 4. Tighten the Glassmorphic Boxes */
+            .module-content {
+                padding: 1.25rem;
+                border-radius: 6px;
+            }
+            .module-content h2 { font-size: 1.25rem; }
+            .module-content p { font-size: 0.85rem; line-height: 1.6; }
+            
+            /* Shrink the terminal block text to prevent overflow */
+            .terminal-block { font-size: 0.7rem; padding: 0.75rem; }
+            .phase-tag { font-size: 0.65rem; margin-bottom: 0.5rem; }
+        }
     </style>
 </head>
 <body>

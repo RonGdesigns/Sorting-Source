@@ -220,11 +220,24 @@
             text-shadow: 0 0 8px rgba(37, 99, 235, 0.4);
         }
 
+        /* --- MOBILE OVERRIDE PROTOCOLS (MODELS) --- */
         @media (max-width: 768px) {
-            .footer-content {
-                flex-direction: column;
-                text-align: center;
-            }
+            body, html { overflow-x: hidden; width: 100%; }
+            
+            /* Ensures the background image covers the screen without stretching */
+            body::before { background-size: cover; background-position: center top; }
+            
+            /* Adjusts the drop-in point so the image is visible before scrolling */
+            .container { padding-top: 40vh; padding-left: 1rem; padding-right: 1rem; }
+            
+            h1 { font-size: 1.8rem; }
+            
+            /* Card compression */
+            .node-card { padding: 1.5rem; }
+            .node-card h2 { flex-direction: column; align-items: flex-start; gap: 0.5rem; font-size: 1.25rem; }
+            
+            /* Stacks the tech specs vertically */
+            .tech-specs { flex-direction: column; gap: 0.5rem; }
         }
 </style>
 </body>
