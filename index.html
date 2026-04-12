@@ -548,10 +548,10 @@
             margin-right: -2rem;
             border-radius: 20px;
         }
-        .step-bg-1 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('1st.webp') no-repeat center center; background-size: cover; }
-        .step-bg-2 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('2nd.webp') no-repeat center center; background-size: cover; }
-        .step-bg-3 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('3rd.webp') no-repeat center center; background-size: cover; }
-        .step-bg-4 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('4th.webp') no-repeat center center; background-size: cover; }
+        .step-bg-1 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('1st.webp') no-repeat center center / cover #0a0a0a; }
+        .step-bg-2 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('2nd.webp') no-repeat center center / cover #0a0a0a; }
+        .step-bg-3 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('3rd.webp') no-repeat center center / cover #0a0a0a; }
+        .step-bg-4 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('4th.webp') no-repeat center center / cover #0a0a0a; }
     </style>
 </head>
 <body>
@@ -840,7 +840,6 @@
         }, { threshold: 0.1 });
 
         footerObserver.observe(systemFooter);
-    }
 </script>
 </body>
 </html>
