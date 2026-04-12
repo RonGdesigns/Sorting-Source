@@ -746,9 +746,9 @@
 
     function typeWriter(elementId, text) {
         const container = document.getElementById(elementId);
-        if (!container) return;
+        if (!container || container.dataset.started) return;
+        container.dataset.started = "true";
         container.innerHTML = ''; 
-        
         let i = 0;
         let isTag = false;
         let textBuffer = '';
@@ -756,7 +756,6 @@
         function type() {
             if (i < text.length) {
                 let char = text.charAt(i);
-                
                 if (char === '<') isTag = true;
                 if (isTag) {
                     textBuffer += char;
@@ -770,45 +769,41 @@
                 } else {
                     container.innerHTML += char;
                 }
-                
                 i++;
-                let delay = isTag ? 0 : (Math.random() * 30 + 15);
-                setTimeout(type, delay);
+                setTimeout(type, isTag ? 0 : 25);
             }
         }
-        setTimeout(type, 400); 
+        type();
     }
+
+    // SINGLE EFFICIENT OBSERVER FOR BOTH TYPEWRITER AND NAV TRACKER
+    const sideTracker = document.getElementById('sideScrollTracker');
+    const systemFooter = document.querySelector('.system-footer');
 
     const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                const protocol = protocols.find(p => p.id === entry.target.id);
-                if (protocol && !entry.target.classList.contains('typing-started')) {
-                    entry.target.classList.add('typing-started');
-                    typeWriter(protocol.id, protocol.text);
-                }
+            // Logic for Typewriter
+            if (entry.target.classList.contains('display-body') && entry.isIntersecting) {
+                typeWriter(entry.target.id, protocols.find(p => p.id === entry.target.id).text);
+            }
+            // Logic for Side Tracker Hiding (Hide when footer is visible)
+            if (entry.target === systemFooter) {
+                if (entry.isIntersecting) sideTracker.classList.add('hidden');
+                else sideTracker.classList.remove('hidden');
             }
         });
-    }, { threshold: 0.5 }); 
+    }, { threshold: 0.1 });
 
-    protocols.forEach(p => {
-        const el = document.getElementById(p.id);
-        if (el) observer.observe(el);
-    });
-    // --- HIGH-PERFORMANCE SIDE TRACKER ---
-    const sideTracker = document.getElementById('sideScrollTracker');
-    const heroSection = document.querySelector('.hero');
-    const systemFooter = document.querySelector('.system-footer');
+    // Start watching elements
+    document.querySelectorAll('.display-body').forEach(el => observer.observe(el));
+    observer.observe(systemFooter);
 
-    // Passive listener doesn't block scrolling on mobile
+    // Show Nav Tracker after Hero
     window.addEventListener('scroll', () => {
-        const scrollPos = window.scrollY;
-        const heroHeight = heroSection.offsetHeight;
-        const footerTop = systemFooter.offsetTop;
-        
-        // Logical Trigger: Show only when Hero is gone but Footer hasn't arrived
-        if (scrollPos > heroHeight * 0.7 && scrollPos < footerTop - window.innerHeight) {
-            sideTracker.classList.remove('hidden');
+        if (window.scrollY > window.innerHeight * 0.5) {
+            if (!systemFooter.getBoundingClientRect().top < window.innerHeight) {
+                sideTracker.classList.remove('hidden');
+            }
         } else {
             sideTracker.classList.add('hidden');
         }
