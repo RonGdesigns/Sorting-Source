@@ -6,6 +6,9 @@
     <title>SortingSource | Algorithmic Lead Synthesis Lead Gen</title>
 
     <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="preload" as="image" href="cube.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&family=Fira+Code&display=swap" rel="stylesheet">
+    
     <style>
         /* --- THE AESTHETIC VARIABLES --- */
         :root {
@@ -63,7 +66,7 @@
             background: rgba(37, 99, 235, 0.05);
         }
         .hero h1 {
-            font-size: 4.5rem;
+            font-size: clamp(2.5rem, 10vw, 4.5rem); /* Shrinks perfectly for mobile */
             line-height: 1.1;
             margin-bottom: 1.5rem;
         }
@@ -539,10 +542,10 @@
             margin-right: -2rem;
             border-radius: 20px;
         }
-        .step-bg-1 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('1st.png') no-repeat center center; background-size: cover; }
-        .step-bg-2 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('2nd.png') no-repeat center center; background-size: cover; }
-        .step-bg-3 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('3rd.png') no-repeat center center; background-size: cover; }
-        .step-bg-4 { background: linear-gradient(to bottom, var(--bg-color) 0%, rgba(10, 10, 10, 0.7) 15%, rgba(10, 10, 10, 0.7) 85%, var(--bg-color) 100%), url('4th.png') no-repeat center center; background-size: cover; }
+        .step-bg-1 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('1st.png') no-repeat center center; background-size: cover; }
+        .step-bg-2 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('2nd.png') no-repeat center center; background-size: cover; }
+        .step-bg-3 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('3rd.png') no-repeat center center; background-size: cover; }
+        .step-bg-4 { background: #0a0a0a linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('4th.png') no-repeat center center; background-size: cover; }
     </style>
 </head>
 <body>
@@ -791,24 +794,25 @@
         const el = document.getElementById(p.id);
         if (el) observer.observe(el);
     });
-    // --- SMART SIDE TRACKER LOGIC ---
+    // --- HIGH-PERFORMANCE SIDE TRACKER ---
     const sideTracker = document.getElementById('sideScrollTracker');
     const heroSection = document.querySelector('.hero');
     const systemFooter = document.querySelector('.system-footer');
 
-    if (sideTracker && heroSection && systemFooter) {
-        let isAtTop = true;
-        let isAtBottom = false;
-
-        // The Brain: Only show tracker if we are NOT at the top and NOT at the bottom
-        const updateTrackerVisibility = () => {
-            if (isAtTop || isAtBottom) {
-                sideTracker.classList.add('hidden');
-            } else {
-                sideTracker.classList.remove('hidden');
-            }
-        };
-
+    // Passive listener doesn't block scrolling on mobile
+    window.addEventListener('scroll', () => {
+        const scrollPos = window.scrollY;
+        const heroHeight = heroSection.offsetHeight;
+        const footerTop = systemFooter.offsetTop;
+        
+        // Logical Trigger: Show only when Hero is gone but Footer hasn't arrived
+        if (scrollPos > heroHeight * 0.7 && scrollPos < footerTop - window.innerHeight) {
+            sideTracker.classList.remove('hidden');
+        } else {
+            sideTracker.classList.add('hidden');
+        }
+    }, { passive: true });
+        
         // 1. Watch the Hero Section
         const heroObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
