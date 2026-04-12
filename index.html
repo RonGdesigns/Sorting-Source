@@ -41,7 +41,8 @@
 
         /* --- HERO SECTION --- */
         .hero {
-            min-height: 100vh;
+            /* Fixes the mobile browser address bar jump */
+            min-height: 100dvh; 
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -49,7 +50,12 @@
             text-align: center;
             padding: 2rem;
             position: relative;
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.98)), url('cube.webp') no-repeat center center;
+            
+            /* PERFORMANCE FIX: Add a solid fallback color. 
+               This ensures the 'First Paint' happens instantly even before the image arrives. */
+            background-color: #0a0a0a; 
+            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.98)), 
+                        url('cube.webp') no-repeat center center;
             background-size: cover;
             border-bottom: 1px solid #222;
         }
