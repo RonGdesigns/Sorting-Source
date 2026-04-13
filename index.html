@@ -548,17 +548,18 @@
             margin-right: -2rem;
             border-radius: 20px;
             
-            /* Apply universal background settings */
+            /* Base settings */
             background-color: #0a0a0a;
             background-position: center center;
             background-size: cover;
             background-repeat: no-repeat;
         }
 
-        .step-bg-1 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('1st.webp'); }
-        .step-bg-2 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('2nd.webp'); }
-        .step-bg-3 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('3rd.webp'); }
-        .step-bg-4 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('4th.webp'); }
+        /* Adjusted the gradient opacities so the images can breathe */
+        .step-bg-1 { background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.95)), url('1st.webp'); }
+        .step-bg-2 { background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.95)), url('2nd.webp'); }
+        .step-bg-3 { background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.95)), url('3rd.webp'); }
+        .step-bg-4 { background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.95), rgba(10, 10, 10, 0.4), rgba(10, 10, 10, 0.95)), url('4th.webp'); }
     </style>
 </head>
 <body>
