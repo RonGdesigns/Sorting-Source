@@ -42,6 +42,7 @@
         /* --- HERO SECTION --- */
         .hero {
             min-height: 100dvh; 
+            width: 100%;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -49,10 +50,14 @@
             text-align: center;
             padding: 2rem;
             position: relative;
-            /* The color #0a0a0a MUST be at the end of the shorthand to work as a fallback */
-            background: linear-gradient(to bottom, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.98)), 
-                        url('cube.webp') no-repeat center center / cover #0a0a0a;
             border-bottom: 1px solid #222;
+            
+            /* Bulletproof Background Implementation */
+            background-color: #0a0a0a;
+            background-image: linear-gradient(to bottom, rgba(10, 10, 10, 0.85), rgba(10, 10, 10, 0.98)), url('cube.webp');
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
         .status-badge {
             font-family: var(--font-mono);
@@ -542,11 +547,18 @@
             margin-left: -2rem; 
             margin-right: -2rem;
             border-radius: 20px;
+            
+            /* Apply universal background settings */
+            background-color: #0a0a0a;
+            background-position: center center;
+            background-size: cover;
+            background-repeat: no-repeat;
         }
-        .step-bg-1 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('1st.webp') no-repeat center center / cover #0a0a0a; }
-        .step-bg-2 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('2nd.webp') no-repeat center center / cover #0a0a0a; }
-        .step-bg-3 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('3rd.webp') no-repeat center center / cover #0a0a0a; }
-        .step-bg-4 { background: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('4th.webp') no-repeat center center / cover #0a0a0a; }
+
+        .step-bg-1 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('1st.webp'); }
+        .step-bg-2 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('2nd.webp'); }
+        .step-bg-3 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('3rd.webp'); }
+        .step-bg-4 { background-image: linear-gradient(to bottom, var(--bg-color), rgba(10, 10, 10, 0.7), var(--bg-color)), url('4th.webp'); }
     </style>
 </head>
 <body>
