@@ -818,27 +818,6 @@
         }
     }, { passive: true });
         
-        // 1. Watch the Hero Section
-        const heroObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // If even 5% of the hero section is visible, keep it hidden
-                isAtTop = entry.isIntersecting;
-                updateTrackerVisibility();
-            });
-        }, { threshold: 0.05 }); 
-        
-        heroObserver.observe(heroSection);
-
-        // 2. Watch the Footer
-        const footerObserver = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                // If 10% of the footer is visible, hide it
-                isAtBottom = entry.isIntersecting;
-                updateTrackerVisibility();
-            });
-        }, { threshold: 0.1 });
-
-        footerObserver.observe(systemFooter);
 </script>
 </body>
 </html>
